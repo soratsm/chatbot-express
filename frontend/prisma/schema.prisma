@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Questions {
+  id String @id @db.VarChar(20)
+  question String @db.VarChar(200)
+  deleted Boolean @default(false)
+  answers Answers[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Answers {
+  id String @db.VarChar(20)
+  order Int
+  questions Questions @relation(fields: [id], references: [id])
+  content String @db.VarChar(200)
+  nextId String @db.VarChar(200)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@id([id, order])
+}

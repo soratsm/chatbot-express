@@ -1,0 +1,25 @@
+-- CreateTable
+CREATE TABLE `Questions` (
+    `id` VARCHAR(20) NOT NULL,
+    `question` VARCHAR(200) NOT NULL,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Answers` (
+    `id` VARCHAR(20) NOT NULL,
+    `order` INTEGER NOT NULL,
+    `content` VARCHAR(200) NOT NULL,
+    `nextId` VARCHAR(200) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`, `order`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Answers` ADD CONSTRAINT `Answers_id_fkey` FOREIGN KEY (`id`) REFERENCES `Questions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
